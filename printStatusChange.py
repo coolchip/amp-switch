@@ -21,7 +21,7 @@ def do_main_program():
     while loop:
         status = readStatus()
         fp = open('status.log','a')
-        fp.write(status)
+        fp.write(status+"\n")
         fp.close()
         print(status)
         time.sleep(5)
