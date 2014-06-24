@@ -16,21 +16,33 @@ def readStatus():
 
 import time
 
-def do_main_program():
+def do_main_program( console ):
     loop = True
     while loop:
         status = readStatus()
-        fp = open('status.log','a')
-        fp.write(status+"\n")
-        fp.close()
-        print(status)
+        if console:
+		    print(status)
+        else:
+            fp = open('~/status.log','a')
+            fp.write(status+"\n")
+            fp.close()
         time.sleep(5)
 
+from optparse import OptionParser 
 import daemon
 
 if __name__ == "__main__":
-    with daemon.DaemonContext():
-        do_main_program()
+    parser = OptionParser( os.path.abspath(__file__) + " [cd]" )
+	
+    parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
+    parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
+
+    (optionen, args) = parser.parse_args()
+
+    if optionen.daemon: 
+        with daemon.DaemonContext():
+            do_main_program(False)
+	else:
+        do_main_program(optionen.console)
 
     sys.exit(0)
-
