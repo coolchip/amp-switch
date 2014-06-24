@@ -65,7 +65,7 @@ import daemon
 if __name__ == "__main__":
     parser = OptionParser( os.path.relpath(__file__) + " [-s xxx] [-c]|[-d]" )
 
-    parser.add_option("-s", "--shutdowntime", dest="shutdowntime", default=10, help="set the shutdown time (seconds)")
+    parser.add_option("-s", "--shutdowntime",  action="store", dest="shutdowntime", default=10, type="int", help="set the shutdown time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
 
@@ -73,7 +73,7 @@ if __name__ == "__main__":
 
     global SHUTDOWN_TIME
     if optionen.shutdowntime:
-        SHUTDOWN_TIME = int(optionen.shutdowntime)
+        SHUTDOWN_TIME = optionen.shutdowntime
     
     if optionen.daemon:
         with daemon.DaemonContext():
