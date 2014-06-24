@@ -37,9 +37,11 @@ def do_main_program( console ):
             if power == 0:
                 print("Power ON")
                 power = 1
+                shutdownTimer = SHUTDOWN_TIME
+
             if shutdownTimer != SHUTDOWN_TIME:
                 shutdownTimer = SHUTDOWN_TIME
-                print("(stop count down) Power still ON")
+                print("Stopping count down (Power is still ON)")
 
         time.sleep(1)
 
