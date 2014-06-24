@@ -21,15 +21,13 @@ power = 0
 
 def switchOn():
     global shutdownTimer
-    global power
-    
+    global power    
     print("Power ON")
     power = 1
     shutdownTimer = SHUTDOWN_TIME
     
 def switchOff():
-    global power
-    
+    global power    
     print("Power OFF")
     power = 0
 
@@ -37,8 +35,7 @@ import time
 
 def do_main_program( console ):
     global shutdownTimer
-    global power
-    
+    global power    
     loop = True
     while loop:
         status = readStatus()
@@ -66,8 +63,6 @@ from optparse import OptionParser
 import daemon
 
 if __name__ == "__main__":
-    global SHUTDOWN_TIME
-    
     parser = OptionParser( os.path.relpath(__file__) + " [-s xxx] [-c]|[-d]" )
 
     parser.add_option("-s", "--shutdowntime", dest="shutdowntime", default=10, help="set the shutdown time (seconds)")
@@ -76,6 +71,7 @@ if __name__ == "__main__":
 
     (optionen, args) = parser.parse_args()
 
+    global SHUTDOWN_TIME
     if optionen.shutdowntime:
         SHUTDOWN_TIME = int(optionen.shutdowntime)
     
