@@ -16,31 +16,47 @@ def readStatus():
 
 import time
 
+SHUTDOWN_TIME = 10
+
 def do_main_program( console ):
     loop = True
+    shutdownTimer = SHUTDOWN_TIME
+    power = 0
     while loop:
         status = readStatus()
-        if console:
-		    print(status)
+
+        if status == "closed":
+            if shutdownTimer == 0:
+                print("Power OFF")
+                power = 0
+            else:
+                shutdownTimer--
+
         else:
-            fp = open('status.log','a')
-            fp.write(status+"\n")
-            fp.close()
-        time.sleep(5)
+            if power == 0:
+                print("Power ON")
+                power = 1
+
+        time.sleep(1)
+
+    #fp = open('status.log','a')
+    #fp.write(status+"\n")
+    #fp.close()
+
 
 import os
-from optparse import OptionParser 
+from optparse import OptionParser
 import daemon
 
 if __name__ == "__main__":
     parser = OptionParser( os.path.relpath(__file__) + " [-c] | [-d]" )
-	
+
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
 
     (optionen, args) = parser.parse_args()
 
-    if optionen.daemon: 
+    if optionen.daemon:
         with daemon.DaemonContext():
             do_main_program(False)
     else:
