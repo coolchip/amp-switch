@@ -27,7 +27,6 @@ def do_main_program():
         time.sleep(5)
 
 import daemon
-from spam import do_main_program
 
 if __name__ == "__main__":
     with daemon.DaemonContext():
