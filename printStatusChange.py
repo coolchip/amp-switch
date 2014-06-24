@@ -32,8 +32,6 @@ import time
 
 def do_main_program( console ):
     loop = True
-    shutdownTimer = SHUTDOWN_TIME
-    power = 0
     while loop:
         status = readStatus()
 
