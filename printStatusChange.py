@@ -77,7 +77,7 @@ if __name__ == "__main__":
     (optionen, args) = parser.parse_args()
 
     if optionen.shutdowntime:
-        SHUTDOWN_TIME = optionen.shutdowntime
+        SHUTDOWN_TIME = int(optionen.shutdowntime)
     
     if optionen.daemon:
         with daemon.DaemonContext():
