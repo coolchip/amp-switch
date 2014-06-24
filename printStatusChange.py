@@ -4,7 +4,6 @@ def readStatus():
     status = ''
     f = open('/proc/asound/card0/pcm0p/sub0/status', 'r')
     for line in f:
-        #print(line)
         matchObj = re.match(r'state.*', line)
         if matchObj:
             status = matchObj.group()
@@ -17,15 +16,22 @@ def readStatus():
 
 import time
 
-if __name__ == "__main__":
+def do_main_program():
     loop = True
     while loop:
         status = readStatus()
-        #fp = open('status.log','a')
-        #fp.write(status)
-        #fp.close()
+        fp = open('status.log','a')
+        fp.write(status)
+        fp.close()
         print(status)
         time.sleep(5)
+
+import daemon
+from spam import do_main_program
+
+if __name__ == "__main__":
+    with daemon.DaemonContext():
+        do_main_program()
 
     sys.exit(0)
 
