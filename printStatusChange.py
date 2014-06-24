@@ -26,16 +26,18 @@ def do_main_program( console ):
         status = readStatus()
 
         if status == "closed":
-            if shutdownTimer == 0:
-                print("Power OFF")
-                power = 0
-            else:
-                shutdownTimer = shutdownTimer-1
-
+            if power == 1:
+                if shutdownTimer == 0:
+                    print("Power OFF")
+                    power = 0
+                else:
+                    shutdownTimer = shutdownTimer-1
+                    print("count down... " + shutdownTimer)
         else:
             if power == 0:
                 print("Power ON")
                 power = 1
+            shutdownTimer = SHUTDOWN_TIME
 
         time.sleep(1)
 
