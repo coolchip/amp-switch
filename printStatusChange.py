@@ -19,15 +19,19 @@ SHUTDOWN_TIME = 10
 shutdownTimer = SHUTDOWN_TIME
 power = 0
 
+import RPi.GPIO as GPIO
+
 def switchOn():
     global shutdownTimer
-    global power    
+    global power
+    GPIO.output(11, GPIO.HIGH)
     print("Power ON")
     power = 1
     shutdownTimer = SHUTDOWN_TIME
     
 def switchOff():
-    global power    
+    global power
+    GPIO.output(11, GPIO.LOW)
     print("Power OFF")
     power = 0
 
@@ -35,7 +39,13 @@ import time
 
 def do_main_program( console ):
     global shutdownTimer
-    global power    
+    global power
+
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(11, GPIO.OUT)
+    GPIO.output(11, GPIO.LOW)
+
     loop = True
     while loop:
         status = readStatus()
