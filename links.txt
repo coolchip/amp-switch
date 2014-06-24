@@ -1,0 +1,8 @@
+links
+
+https://www.raspiprojekt.de/anleitungen/software/29-gpio-python-library.html
+http://wiki.ubuntuusers.de/ALSA
+http://wiki.ubuntuusers.de/tar
+http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
+http://raspberrypiguide.de/howtos/powerpi-raspberry-pi-haussteuerung/
+http://debiananwenderhandbuch.de/init.html
