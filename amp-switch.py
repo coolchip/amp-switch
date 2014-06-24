@@ -14,32 +14,31 @@ def readStatus():
             break
     return status
 
+def isAudioPlaying():
+    status = readStatus()
+    if status == 'closed':
+        return False
+    else:
+        return True
 
-SHUTDOWN_TIME = 200
-shutdownTimer = SHUTDOWN_TIME
-power = 0
 
 import RPi.GPIO as GPIO
 
-def switchOn():
-    global shutdownTimer
-    global power
+def powerOn(console):
     GPIO.output(11, GPIO.HIGH)
-    print("Power ON")
-    power = 1
-    shutdownTimer = SHUTDOWN_TIME
+    if console:
+        print("Power ON")
     
-def switchOff():
-    global power
+def powerOff(console):
     GPIO.output(11, GPIO.LOW)
-    print("Power OFF")
-    power = 0
+    if console:
+        print("Power OFF")
 
 import time
 
-def do_main_program( console ):
-    global shutdownTimer
-    global power
+def main( console = False, shutdownTime = 200 ):
+    shutdownTimer = shutdownTime
+    power = 0
 
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
@@ -48,23 +47,25 @@ def do_main_program( console ):
 
     loop = True
     while loop:
-        status = readStatus()
+        audioPlaying = isAudioPlaying()
 
-        if status == "closed":
+        if audioPlaying:
+            if power == 0:
+                powerOn(console)
+                power = 1
+                shutdownTimer = shutdownTime
+            if shutdownTimer != shutdownTime:
+                shutdownTimer = shutdownTime
+                if console:
+                    print('Stopping count down (Power is still ON)')
+        else:
             if power == 1:
                 if shutdownTimer == 0:
-                    switchOff()
+                    powerOff(console)
+                    power = 0
                 else:
                     shutdownTimer = shutdownTimer-1
                     print("count down... " + str(shutdownTimer))
-        else:
-            if power == 0:
-                switchOn()
-
-            if shutdownTimer != SHUTDOWN_TIME:
-                shutdownTimer = SHUTDOWN_TIME
-                print("Stopping count down (Power is still ON)")
-
         time.sleep(0.1)
 
 
@@ -75,20 +76,17 @@ import daemon
 if __name__ == "__main__":
     parser = OptionParser( os.path.relpath(__file__) + " [-s xxx] [-c]|[-d]" )
 
-    parser.add_option("-s", "--shutdowntime",  action="store", dest="shutdowntime", default=10, type="int", help="set the shutdown time (seconds)")
+    parser.add_option("-s", "--shutdowntime",  action="store", dest="shutdowntime", default=200, type="int", help="set the shutdown time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
 
     (optionen, args) = parser.parse_args()
 
-    global SHUTDOWN_TIME
-    if optionen.shutdowntime:
-        SHUTDOWN_TIME = optionen.shutdowntime
-    
+    argShutdownTime = optionen.shutdowntime    
     if optionen.daemon:
         with daemon.DaemonContext():
-            do_main_program(False)
+            main(console=False, shutdownTime=argShutdownTime)
     else:
-        do_main_program(optionen.console)
+        main(console=optionen.console, shutdownTime=argShutdownTime)
 
     sys.exit(0)
