@@ -14,9 +14,21 @@ def readStatus():
             break
     return status
 
-import time
 
 SHUTDOWN_TIME = 10
+shutdownTimer = SHUTDOWN_TIME
+power = 0
+
+def switchOn():
+    print("Power ON")
+    power = 1
+    shutdownTimer = SHUTDOWN_TIME
+    
+def switchOff():
+    print("Power OFF")
+    power = 0
+
+import time
 
 def do_main_program( console ):
     loop = True
@@ -28,16 +40,13 @@ def do_main_program( console ):
         if status == "closed":
             if power == 1:
                 if shutdownTimer == 0:
-                    print("Power OFF")
-                    power = 0
+                    switchOff()
                 else:
                     shutdownTimer = shutdownTimer-1
                     print("count down... " + str(shutdownTimer))
         else:
             if power == 0:
-                print("Power ON")
-                power = 1
-                shutdownTimer = SHUTDOWN_TIME
+                switchOn()
 
             if shutdownTimer != SHUTDOWN_TIME:
                 shutdownTimer = SHUTDOWN_TIME
@@ -45,23 +54,23 @@ def do_main_program( console ):
 
         time.sleep(1)
 
-    #fp = open('status.log','a')
-    #fp.write(status+"\n")
-    #fp.close()
-
 
 import os
 from optparse import OptionParser
 import daemon
 
 if __name__ == "__main__":
-    parser = OptionParser( os.path.relpath(__file__) + " [-c] | [-d]" )
+    parser = OptionParser( os.path.relpath(__file__) + " [-s xxx] [-c]|[-d]" )
 
+    parser.add_option("-s", "--shutdowntime", dest="shutdowntime", default=10, help="set the shutdown time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
 
     (optionen, args) = parser.parse_args()
 
+    if optionen.shutdowntime:
+        SHUTDOWN_TIME = SHUTDOWN_TIME
+    
     if optionen.daemon:
         with daemon.DaemonContext():
             do_main_program(False)
