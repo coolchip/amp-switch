@@ -24,8 +24,8 @@ if __name__ == "__main__":
         #fp = open('status.log','a')
         #fp.write(status)
         #fp.close()
-		print(status)
+        print(status)
         time.sleep(5)
 
-	sys.exit(0)
+    sys.exit(0)
 
