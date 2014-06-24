@@ -28,6 +28,7 @@ def do_main_program( console ):
             fp.close()
         time.sleep(5)
 
+import os
 from optparse import OptionParser 
 import daemon
 
