@@ -30,7 +30,7 @@ def do_main_program( console ):
                 print("Power OFF")
                 power = 0
             else:
-                shutdownTimer--
+                shutdownTimer = shutdownTimer-1
 
         else:
             if power == 0:
