@@ -32,7 +32,7 @@ def do_main_program( console ):
                     power = 0
                 else:
                     shutdownTimer = shutdownTimer-1
-                    print("count down... " + shutdownTimer)
+                    print("count down... " + str(shutdownTimer))
         else:
             if power == 0:
                 print("Power ON")
