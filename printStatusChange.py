@@ -42,7 +42,7 @@ if __name__ == "__main__":
     if optionen.daemon: 
         with daemon.DaemonContext():
             do_main_program(False)
-	else:
+    else:
         do_main_program(optionen.console)
 
     sys.exit(0)
