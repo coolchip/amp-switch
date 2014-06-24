@@ -23,7 +23,7 @@ def do_main_program( console ):
         if console:
 		    print(status)
         else:
-            fp = open('~/status.log','a')
+            fp = open('status.log','a')
             fp.write(status+"\n")
             fp.close()
         time.sleep(5)
@@ -33,7 +33,7 @@ from optparse import OptionParser
 import daemon
 
 if __name__ == "__main__":
-    parser = OptionParser( os.path.abspath(__file__) + " [cd]" )
+    parser = OptionParser( os.path.relpath(__file__) + " [-c] | [-d]" )
 	
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="start as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
