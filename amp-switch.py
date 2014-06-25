@@ -55,7 +55,7 @@ def main( console, powerOffDelay ):
             if power == 0:
                 if timer != None:
                     timer.cancel()
-					timer = None
+                    timer = None
                 powerOn(console)
                 power = 1
         else:
