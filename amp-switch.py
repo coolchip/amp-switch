@@ -1,26 +1,10 @@
-import re
-
-def readStatus():
-    status = ''
-    f = open('/proc/asound/card0/pcm0p/sub0/status', 'r')
-    for line in f:
-        matchObj = re.match(r'state.*', line)
-        if matchObj:
-            status = matchObj.group()
-            break
-        matchObj = re.match(r'closed', line)
-        if matchObj:
-            status = matchObj.group()
-            break
-    return status
 
 def isAudioPlaying():
-    status = readStatus()
-    if status == 'closed':
-        return False
-    else:
-        return True
-
+    asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').read()
+	if 'closed' in asoundStatus:
+	    return False
+	else:
+		return True
 
 import RPi.GPIO as GPIO
 
