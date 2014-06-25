@@ -28,8 +28,6 @@ from threading import Timer
 def main( contolOut, powerOffDelay ):
     power = 0
     timer = None
-    initHardware()
-
     loop = True
     while loop:
         audioPlaying = isAudioPlaying()
