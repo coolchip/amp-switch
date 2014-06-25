@@ -16,10 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class ConsoleOut( object ):
-
     def __init__( self ):
         print("Console INIT")
-        pass
 
     def powerOn(self):
         print("Power ON")

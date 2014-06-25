@@ -18,7 +18,6 @@
 import RPi.GPIO as GPIO
 
 class GpioOut( object ):
-
     def __init__( self ):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
