@@ -36,9 +36,8 @@ def main( contolOut, powerOffDelay ):
         if audioPlaying != isAudioPlaying():
             audioPlaying = isAudioPlaying()
             if audioPlaying:
-                if timer != None:
-                    timer.cancel()
-                    timer = None
+                #if timer != None:
+                timer.cancel()
                     #print("Delayed Power off canceled...")
                 contolOut.powerOn()
             else:
