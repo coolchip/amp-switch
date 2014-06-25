@@ -59,8 +59,8 @@ from optparse import OptionParser
 import daemon
 
 if __name__ == "__main__":
-    parser = OptionParser( os.path.relpath(__file__) + " [-s xxx] [-c]|[-d]" )
-    parser.add_option("-doff", "--poweroffdelay",  action="store", dest="poweroffdelay", default=200, type="int", help="set the power off delay time (seconds)")
+    parser = OptionParser( os.path.relpath(__file__) + " [-t xxx] [-c]|[-d]" )
+    parser.add_option("-t", "--poweroffdelay",  action="store", dest="poweroffdelay", default=200, type="int", help="set the power off delay time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="run as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
     (optionen, args) = parser.parse_args()
