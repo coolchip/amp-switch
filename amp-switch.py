@@ -27,10 +27,10 @@ def powerOff(console):
 import time
 from threading import Timer
 
-def delayedPowerOff():
+def delayedPowerOff(console):
     audioPlaying = isAudioPlaying()
     if audioPlaying == False:
-        powerOff(True)
+        powerOff(console)
 
 def main( console, powerOffDelay ):
     power = 0
@@ -45,7 +45,7 @@ def main( console, powerOffDelay ):
                 power = 1
         else:
             if power == 1:
-                Timer(powerOffDelay, delayedPowerOff, ()).start()
+                Timer(powerOffDelay, delayedPowerOff, args=[console]).start()
                 power = 0
         time.sleep(0.25)
 
