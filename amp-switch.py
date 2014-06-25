@@ -25,34 +25,29 @@ def powerOff(console):
         print("Power OFF")
 
 import time
+from threading import Timer
+
+def delayedPowerOff(console):
+    audioPlaying = isAudioPlaying()
+    if audioPlaying == False:
+        powerOff(console)
 
 def main( console, powerOffDelay ):
-    shutdownTimer = powerOffDelay
     power = 0
     initHardware()
 
     loop = True
     while loop:
         audioPlaying = isAudioPlaying()
-
         if audioPlaying:
             if power == 0:
                 powerOn(console)
                 power = 1
-                shutdownTimer = powerOffDelay
-            if shutdownTimer != powerOffDelay:
-                shutdownTimer = powerOffDelay
-                if console:
-                    print('Stopping count down (Power is still ON)')
         else:
             if power == 1:
-                if shutdownTimer == 0:
-                    powerOff(console)
-                    power = 0
-                else:
-                    shutdownTimer = shutdownTimer-1
-                    print("count down... " + str(shutdownTimer))
-        time.sleep(0.1)
+                Timer(powerOffDelay, delayedPowerOff, (console)).start()
+                power = 0
+        time.sleep(0.25)
 
 import os
 from optparse import OptionParser
