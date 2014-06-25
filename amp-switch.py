@@ -54,6 +54,7 @@ def main( console, powerOffDelay ):
         if audioPlaying:
             if power == 0:
                 if timer != None:
+                    print("timer.cancel")
                     timer.cancel()
                     timer = None
                 powerOn(console)
