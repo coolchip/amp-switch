@@ -18,6 +18,7 @@
 class ConsoleOut( object ):
 
     def __init__( self ):
+        print("Console INIT")
         pass
 
     def powerOn(self):
