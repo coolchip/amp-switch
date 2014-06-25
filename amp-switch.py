@@ -38,11 +38,11 @@ def main( contolOut, powerOffDelay ):
                     timer = None
                     #if console:
                     #    print("Delayed Power off canceled...")
-                contolOut.powerOn(console)
+                contolOut.powerOn()
                 power = 1
         else:
             if power == 1:
-                timer = Timer(powerOffDelay, contolOut.powerOff, args=[console])
+                timer = Timer(powerOffDelay, contolOut.powerOff, ())
                 timer.start()
                 power = 0
         time.sleep(0.25)
