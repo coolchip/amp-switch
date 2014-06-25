@@ -23,7 +23,7 @@ from gpioout import GpioOut
 from consoleout import ConsoleOut
 
 def isAudioPlaying():
-    asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').read()
+    asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').readline()
     if 'closed' in asoundStatus:
         return False
     else:
@@ -44,7 +44,6 @@ def main( contolOut, powerOffDelay ):
             else:
                 timer = Timer(powerOffDelay, contolOut.powerOff, ())
                 timer.start()
-                power = 0
         time.sleep(0.25)
 
 if __name__ == "__main__":
