@@ -15,6 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import time
+from threading import Timer
+from optparse import OptionParser
+import daemon
+from gpioout import GpioOut
+from consoleout import ConsoleOut
+
 def isAudioPlaying():
     asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').read()
     if 'closed' in asoundStatus:
@@ -22,14 +29,10 @@ def isAudioPlaying():
     else:
         return True
 
-import time
-from threading import Timer
-
 def main( contolOut, powerOffDelay ):
     power = 0
     timer = None
-    loop = True
-    while loop:
+    while True:
         audioPlaying = isAudioPlaying()
         if audioPlaying:
             if power == 0:
@@ -47,15 +50,8 @@ def main( contolOut, powerOffDelay ):
                 power = 0
         time.sleep(0.25)
 
-import os
-from optparse import OptionParser
-import daemon
-
-from gpioout import GpioOut
-from consoleout import ConsoleOut
-
 if __name__ == "__main__":
-    parser = OptionParser( os.path.relpath(__file__) + " [-t xxx] [-c]|[-d]" )
+    parser = OptionParser()
     parser.add_option("-t", "--poweroffdelay",  action="store", dest="poweroffdelay", default=200, type="int", help="set the power off delay time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="run as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
@@ -69,5 +65,4 @@ if __name__ == "__main__":
             main( ConsoleOut(), powerOffDelay=optionen.poweroffdelay)
         else:
             main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
-
     sys.exit(0)
