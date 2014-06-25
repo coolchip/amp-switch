@@ -53,8 +53,8 @@ import os
 from optparse import OptionParser
 import daemon
 
-import gpioout
-import consoleout
+from gpioout import GpioOut
+from consoleout import ConsoleOut
 
 if __name__ == "__main__":
     parser = OptionParser( os.path.relpath(__file__) + " [-t xxx] [-c]|[-d]" )
