@@ -22,28 +22,10 @@ def isAudioPlaying():
     else:
         return True
 
-import RPi.GPIO as GPIO
-
-def initHardware():
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11, GPIO.OUT)
-    GPIO.output(11, GPIO.LOW)
-
-def powerOn(console):
-    GPIO.output(11, GPIO.HIGH)
-    if console:
-        print("Power ON")
-
-def powerOff(console):
-    GPIO.output(11, GPIO.LOW)
-    if console:
-        print("Power OFF")
-
 import time
 from threading import Timer
 
-def main( console, powerOffDelay ):
+def main( contolOut, powerOffDelay ):
     power = 0
     timer = None
     initHardware()
@@ -56,13 +38,13 @@ def main( console, powerOffDelay ):
                 if timer != None:
                     timer.cancel()
                     timer = None
-                    if console:
-                        print("Delayed Power off canceled...")
-                powerOn(console)
+                    #if console:
+                    #    print("Delayed Power off canceled...")
+                contolOut.powerOn(console)
                 power = 1
         else:
             if power == 1:
-                timer = Timer(powerOffDelay, powerOff, args=[console])
+                timer = Timer(powerOffDelay, contolOut.powerOff, args=[console])
                 timer.start()
                 power = 0
         time.sleep(0.25)
@@ -70,6 +52,9 @@ def main( console, powerOffDelay ):
 import os
 from optparse import OptionParser
 import daemon
+
+import gpioout
+import consoleout
 
 if __name__ == "__main__":
     parser = OptionParser( os.path.relpath(__file__) + " [-t xxx] [-c]|[-d]" )
@@ -80,8 +65,11 @@ if __name__ == "__main__":
 
     if optionen.daemon:
         with daemon.DaemonContext():
-            main(console=False, powerOffDelay=optionen.poweroffdelay)
+            main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
     else:
-        main(console=optionen.console, powerOffDelay=optionen.poweroffdelay)
+        if optionen.console:
+            main( ConsoleOut(), powerOffDelay=optionen.poweroffdelay)
+        else:
+            main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
 
     sys.exit(0)
