@@ -1,10 +1,10 @@
 
 def isAudioPlaying():
     asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').read()
-	if 'closed' in asoundStatus:
-	    return False
-	else:
-		return True
+    if 'closed' in asoundStatus:
+        return False
+    else:
+        return True
 
 import RPi.GPIO as GPIO
 
@@ -12,7 +12,7 @@ def powerOn(console):
     GPIO.output(11, GPIO.HIGH)
     if console:
         print("Power ON")
-    
+
 def powerOff(console):
     GPIO.output(11, GPIO.LOW)
     if console:
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     (optionen, args) = parser.parse_args()
 
-    argShutdownTime = optionen.shutdowntime    
+    argShutdownTime = optionen.shutdowntime
     if optionen.daemon:
         with daemon.DaemonContext():
             main(console=False, shutdownTime=argShutdownTime)
