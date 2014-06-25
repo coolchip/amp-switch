@@ -1,5 +1,5 @@
 # This file is part of Amp Switch
-
+#
 # Copyright (C) 2014 Sebastian Balling <coolchip@gmx.de>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -30,21 +30,18 @@ def isAudioPlaying():
         return True
 
 def main( contolOut, powerOffDelay ):
-    power = 0
+    audioPlaying = False
     timer = None
     while True:
-        audioPlaying = isAudioPlaying()
-        if audioPlaying:
-            if power == 0:
+        if audioPlaying != isAudioPlaying():
+            audioPlaying = isAudioPlaying()
+            if audioPlaying:
                 if timer != None:
                     timer.cancel()
                     timer = None
-                    #if console:
-                    #    print("Delayed Power off canceled...")
+                    #print("Delayed Power off canceled...")
                 contolOut.powerOn()
-                power = 1
-        else:
-            if power == 1:
+            else:
                 timer = Timer(powerOffDelay, contolOut.powerOff, ())
                 timer.start()
                 power = 0

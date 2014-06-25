@@ -1,5 +1,5 @@
 # This file is part of Amp Switch
-
+#
 # Copyright (C) 2014 Sebastian Balling <coolchip@gmx.de>
 #
 # This program is free software; you can redistribute it and/or modify
