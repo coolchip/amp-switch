@@ -1,5 +1,7 @@
 https://www.raspiprojekt.de/anleitungen/software/29-gpio-python-library.html
 http://wiki.ubuntuusers.de/ALSA
 http://raspberrypiguide.de/howtos/raspberry-pi-gpio-how-to/
-http://raspberrypiguide.de/howtos/powerpi-raspberry-pi-haussteuerung/
 http://debiananwenderhandbuch.de/init.html
+
+http://thefloppydisk.wordpress.com/2013/06/06/raspberry-pi-gpio-inputoutput-in-javascript/
+http://raspberrypiguide.de/howtos/powerpi-raspberry-pi-haussteuerung/
