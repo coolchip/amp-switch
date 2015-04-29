@@ -27,6 +27,7 @@ from optparse import OptionParser
 import daemon
 from gpioout import GpioOut
 from consoleout import ConsoleOut
+from transmitterout import TransmitterOut
 
 def isAudioPlaying():
     asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').readline()
@@ -55,6 +56,7 @@ if __name__ == "__main__":
     parser.add_option("-t", "--poweroffdelay",  action="store", dest="poweroffdelay", default=200, type="int", help="set the power off delay time (seconds)")
     parser.add_option("-d", "--daemon", action="store_true", dest="daemon", default=False, help="run as daemon")
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
+	parser.add_option("-t", "--transmitter", action="store_true", dest="transmitter", default=False, help="output on radio transmitter")
     (optionen, args) = parser.parse_args()
 
     if optionen.daemon:
@@ -62,7 +64,9 @@ if __name__ == "__main__":
             main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
     else:
         if optionen.console:
-            main( ConsoleOut(), powerOffDelay=optionen.poweroffdelay)
+            main( ConsoleOut(), powerOffDelay=optionen.poweroffdelay )
+		else if optionen.transmitter:
+			main( TransmitterOut(), powerOffDelay=optionen.poweroffdelay )
         else:
             main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
     sys.exit(0)
