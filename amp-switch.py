@@ -21,6 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
 import time
 from threading import Timer
 from optparse import OptionParser
@@ -39,17 +40,22 @@ def isAudioPlaying():
 def main( contolOut, powerOffDelay ):
     audioPlaying = False
     timer = None
-    while True:
-        if audioPlaying != isAudioPlaying():
-            audioPlaying = isAudioPlaying()
-            if audioPlaying:
-                if timer:
-                    timer.cancel()
-                contolOut.powerOn()
-            else:
-                timer = Timer(powerOffDelay, contolOut.powerOff, ())
-                timer.start()
-        time.sleep(0.25)
+    try:
+        while True:
+            if audioPlaying != isAudioPlaying():
+                audioPlaying = isAudioPlaying()
+                if audioPlaying:
+                    if timer:
+                        timer.cancel()
+                    contolOut.powerOn()
+                else:
+                    timer = Timer(powerOffDelay, contolOut.powerOff, ())
+                    timer.start()
+            time.sleep(0.25)
+    except (KeyboardInterrupt, SystemExit):
+        pass
+    else:
+        pass
 
 if __name__ == "__main__":
     parser = OptionParser()
