@@ -23,9 +23,9 @@ import socket
 
 class UdpOut( object ):
 
-    __UDP_URL = "pi2"
+    __UDP_URL = "xberry"
     __UDP_PORT = 6677
-    __SOCKET_NAME = "Tester"
+    __SOCKET_NAME = "Amp"
 
     def __init__( self ):
         pass
