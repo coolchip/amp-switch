@@ -30,6 +30,7 @@ from gpioout import GpioOut
 from consoleout import ConsoleOut
 from transmitterout import TransmitterOut
 from udpout import UdpOut
+from httpout import HttpOut
 
 def isAudioPlaying():
     asoundStatus = open('/proc/asound/card0/pcm0p/sub0/status', 'r').readline()
@@ -65,6 +66,7 @@ if __name__ == "__main__":
     parser.add_option("-c", "--console", action="store_true", dest="console", default=False, help="output on console")
     parser.add_option("-m", "--transmitter", action="store_true", dest="transmitter", default=False, help="output on radio transmitter")
     parser.add_option("-u", "--udp", action="store_true", dest="udp", default=False, help="output on udp (powerPi)")
+    parser.add_option("-q", "--http", action="store_true", dest="http", default=False, help="output on http (nodered)")
     (optionen, args) = parser.parse_args()
 
     if optionen.daemon:
@@ -77,6 +79,8 @@ if __name__ == "__main__":
             main( TransmitterOut(), powerOffDelay=optionen.poweroffdelay )
         elif optionen.udp:
             main( UdpOut(), powerOffDelay=optionen.poweroffdelay )
+        elif optionen.http:
+            main( HttpOut(), powerOffDelay=optionen.poweroffdelay )
         else:
             main( GpioOut(), powerOffDelay=optionen.poweroffdelay )
     sys.exit(0)
