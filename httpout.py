@@ -23,7 +23,7 @@ import urllib2
 
 class HttpOut( object ):
 
-    __HOST = "http://raspibox:1880"
+    __HOST = "http://raspibox.fritz.box:1880"
     __SOCKET_NAME = "D"
 
     def __init__( self ):
